@@ -80,6 +80,20 @@ test('a full game, shared-boundary editing, undo, reload, gallery, exports, and 
   await expect(page.getByRole('button', { name: /ゆれる、ふたつ/ })).toBeVisible();
   await page.reload();
   await expect(page.getByRole('button', { name: /ゆれる、ふたつ/ })).toBeVisible();
+  await page.getByRole('button', { name: /ゆれる、ふたつ/ }).click();
+  await page.getByRole('button', { name: 'この一枚から、また描く' }).click();
+  await expect(page.getByRole('heading', { name: 'ただ、思うままに。' })).toBeVisible();
+  await draw(page, [36, 36], [84, 36]);
+  await expect(page.locator('.board-meta')).toContainText('1 手 · 制限なし');
+  for (let visit = 0; visit < 2; visit++) {
+    await page.getByRole('button', { name: '間 — MA ホーム' }).click();
+    await page.getByRole('button', { name: '3つの習作と、自由な制作' }).click();
+    await page.getByRole('button', { name: /ただ、思うままに。/ }).click();
+    await expect(page.locator('.board-meta')).toContainText('1 手 · 制限なし');
+    await expect(page.locator('.drawn-line')).toHaveCount(6);
+  }
+  await page.getByRole('button', { name: '作品集', exact: true }).click();
+  await expect(page.locator('.art-card')).toHaveCount(1);
 });
 
 test('second study checks a real whitespace corridor, third study reuses split boundaries', async ({ page }) => {

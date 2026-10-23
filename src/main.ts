@@ -58,8 +58,9 @@ function navigate(next: Screen): void {
   render(); window.scrollTo(0, 0);
 }
 function startStudy(id: StudyId): void {
-  store.sessions[id] ??= newSession(id);
-  store.active = id; resetTools(); closeSheet(); save(); navigate('play');
+  const latest = id === 'free' ? Object.values(store.sessions).filter(s => s.studyId === 'free').sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0] : null;
+  if (!latest) store.sessions[id] ??= newSession(id);
+  store.active = latest?.id ?? id; resetTools(); closeSheet(); save(); navigate('play');
 }
 function toast(text: string, duration = 3400): void {
   const el = document.querySelector<HTMLDivElement>('#toast')!;
@@ -279,8 +280,11 @@ async function onClick(event: MouseEvent): Promise<void> {
     if (art) { try { await exportArt(art.snapshot, art.title, button.dataset.format as 'png' | 'svg'); } catch { toast('画像を保存できませんでした。もう一度お試しください。'); } }
   } else if (action === 'next-study') {
     const a = store.artworks.find(a => a.id === activeArtId);
-    if (a?.studyId === 'free') { store.sessions.free = newSession('free'); }
-    startStudy(a?.studyId === '01' ? '02' : a?.studyId === '02' ? '03' : 'free');
+    if (a?.studyId === 'free') {
+      const id = `free-${crypto.randomUUID()}`;
+      store.sessions[id] = newSession('free', id); store.active = id;
+      resetTools(); closeSheet(); save(); navigate('play');
+    } else startStudy(a?.studyId === '01' ? '02' : a?.studyId === '02' ? '03' : 'free');
   } else if (action === 'resume-art') {
     const art = store.artworks.find(a => a.id === activeArtId);
     if (!art) return;

@@ -114,7 +114,7 @@ const isPoint = (p: unknown): p is Point => !!p && typeof p === 'object' && ['x'
 function isSnapshot(s: unknown): s is Snapshot {
   if (!s || typeof s !== 'object') return false;
   const v = s as Snapshot;
-  return Array.isArray(v.edges) && v.edges.length < 500 && v.edges.every(e => typeof e.id === 'string' && isPoint(e.a) && isPoint(e.b) && isPoint(e.c)) && !!v.paints && typeof v.paints === 'object' && Object.values(v.paints).every(p => p in INKS) && Number.isInteger(v.moves) && v.moves >= 0;
+  return Array.isArray(v.edges) && v.edges.every(e => typeof e.id === 'string' && isPoint(e.a) && isPoint(e.b) && isPoint(e.c)) && !!v.paints && typeof v.paints === 'object' && Object.values(v.paints).every(p => Object.hasOwn(INKS, p)) && Number.isInteger(v.moves) && v.moves >= 0;
 }
 export function parseStore(raw: string | null): Store {
   if (!raw) return emptyStore();
