@@ -58,7 +58,7 @@ npm run test:e2e # 390×844 / 320×667 のタッチ操作とデスクトップ�
 
 `npm run build` でできる **`dist/` 全体**を、HTTPS対応の静的ホスティングに配置します。相対パスのため、ルートと `/ma/` のようなサブディレクトリの両方に対応します。
 
-GitHub ActionsのCIはテストを行い、配信用 `ma-web` アーティファクトと画面の検証結果を保存します。手動の **Deploy to GitHub Pages** ワークフローも同梱しています。公開する場合はGitHubの Settings → Pages の Source を **GitHub Actions** にしてから、Actionsで同ワークフローを実行してください。ソースの保存とWebサイトの公開は別操作です。
+GitHub ActionsのCIはテストを行い、配信用 `ma-web` アーティファクトと画面の検証結果を保存します。**Deploy to GitHub Pages** は `main` への更新で自動実行され、手動実行にも対応します。初回はGitHubの Settings → Pages の Source を **GitHub Actions** に設定してください。Pagesの初回有効化には、連携アプリのコード更新権限とは別の権限が必要です。非公開リポジトリではGitHubの契約プランによる制限もあります。
 
 ## 実装
 
