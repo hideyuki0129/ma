@@ -2,6 +2,10 @@
 
 **線を置く。余白が、生まれる。**
 
+**[スマホで遊ぶ → https://hideyuki0129.github.io/ma/](https://hideyuki0129.github.io/ma/)**
+
+SafariやChromeで開くだけで遊べます。アカウント登録・インストールは不要です。公開リポジトリのGitHub Pagesで配信しています。
+
 スマートフォンの縦画面で、曲線と色面を組み合わせて自分の一枚を残す造形ゲーム。[設計研究](docs/design-research.md)をもとに、制作と判断の核を遊べる形にしました。
 
 <img src="docs/mobile-play.png" alt="スマートフォン縦画面の間。曲線を共有する朱と藍の色面。" width="320" />
